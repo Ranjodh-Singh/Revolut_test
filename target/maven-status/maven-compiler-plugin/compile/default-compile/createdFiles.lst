@@ -1,0 +1,5 @@
+test\revolut\App.class
+test\revolut\db\dao\AccountDAO.class
+test\revolut\db\entity\Account.class
+test\revolut\config\DatabaseConfig.class
+test\revolut\resource\RestEndPoint.class
