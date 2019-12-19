@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Application Class.
@@ -32,6 +34,9 @@ public class App {
     }
     private static HttpServer createHttpServer() throws IOException {
         ResourceConfig applicationResourceConfig = new PackagesResourceConfig("test.revolut");
+        final Map<String, Object> config = new HashMap<String, Object>();
+        config.put("com.sun.jersey.api.json.POJOMappingFeature", true);
+        applicationResourceConfig.setPropertiesAndFeatures(config);
         return HttpServerFactory.create(getBaseURI(), applicationResourceConfig);
     }
     private static URI getBaseURI() {
