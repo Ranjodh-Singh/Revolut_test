@@ -5,6 +5,13 @@ Simple Application which can do following -
 4. list all the transactions/statement.
 5. provide very rudimantory level of concurrency solution using db status.
 
+To run-(java 8 has been used and latest maven version.)
+>maven clean install
+
+>cd target
+
+>java -jar bank-1.0.jar
+
 Technologies Used:
 - java
 - jersey 
