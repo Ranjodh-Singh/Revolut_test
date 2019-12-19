@@ -6,6 +6,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import test.revolut.db.entity.Account;
+import test.revolut.db.entity.Transaction;
 
 import java.util.Properties;
 
@@ -26,6 +27,7 @@ public class DatabaseConfig {
                 settings.put(Environment.HBM2DDL_AUTO, "create-drop");
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Account.class);
+                configuration.addAnnotatedClass(Transaction.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);

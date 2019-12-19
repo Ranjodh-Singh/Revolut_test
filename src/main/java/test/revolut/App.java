@@ -23,8 +23,8 @@ public class App {
     public static void main( String[] args ) throws IOException {
 
         logger.info("Starting Bank's Embedded  HTTPServer...\n");
-        HttpServer crunchifyHTTPServer = createHttpServer();
-        crunchifyHTTPServer.start();
+        HttpServer basicHttpServer = createHttpServer();
+        basicHttpServer.start();
         logger.info(String.format("\nJersey Application Server started with WADL available at " + "%sapplication.wadl\n", getBaseURI()));
         logger.info("Started Bank's Embedded Jersey HTTPServer Successfully !!!");
 
@@ -32,8 +32,6 @@ public class App {
     }
     private static HttpServer createHttpServer() throws IOException {
         ResourceConfig applicationResourceConfig = new PackagesResourceConfig("test.revolut");
-        // This tutorial required and then enable below line: http://crunchify.me/1VIwInK
-        //applicationResourceConfig.getContainerResponseFilters().add(CrunchifyCORSFilter.class);
         return HttpServerFactory.create(getBaseURI(), applicationResourceConfig);
     }
     private static URI getBaseURI() {
