@@ -34,7 +34,7 @@ public class App {
     }
     private static HttpServer createHttpServer() throws IOException {
         ResourceConfig applicationResourceConfig = new PackagesResourceConfig("test.revolut");
-        final Map<String, Object> config = new HashMap<String, Object>();
+        final Map<String, Object> config = new HashMap<>();
         config.put("com.sun.jersey.api.json.POJOMappingFeature", true);
         applicationResourceConfig.setPropertiesAndFeatures(config);
         return HttpServerFactory.create(getBaseURI(), applicationResourceConfig);
