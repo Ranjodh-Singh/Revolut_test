@@ -1,6 +1,6 @@
 Technologies Used:
--java
--jersey 
+- java
+- jersey 
 - apache commons libraries
 - Gson
 - hsqldb
