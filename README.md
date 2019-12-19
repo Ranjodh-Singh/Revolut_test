@@ -1,3 +1,10 @@
+Simple Application which can do following -
+1. Created a new account.
+2. add money to your account.
+3. debit money from your account.
+4. list all the transactions/statement.
+5. provide very rudimantory level of concurrency solution using db status.
+
 Technologies Used:
 - java
 - jersey 
