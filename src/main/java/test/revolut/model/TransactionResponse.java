@@ -12,6 +12,7 @@ public class TransactionResponse {
     private String dateCreated;
     private String action;
     private BigDecimal transactionAmount;
+    private String remarks;
 
     public int getAccountId() {
         return accountId;
@@ -77,6 +78,14 @@ public class TransactionResponse {
         this.transactionAmount = transactionAmount;
     }
 
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", TransactionResponse.class.getSimpleName() + "[", "]")
@@ -88,6 +97,7 @@ public class TransactionResponse {
                 .add("dateCreated='" + dateCreated + "'")
                 .add("action='" + action + "'")
                 .add("transactionAmount=" + transactionAmount)
+                .add("remarks='" + remarks + "'")
                 .toString();
     }
 }

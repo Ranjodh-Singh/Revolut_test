@@ -67,7 +67,23 @@ public class AccountDAO {
         }
         throw new InvalidAccountException();
     }
+    public void saveALlAccount(List<Account> accounts) {
+        Transaction transaction = null;
+        try (Session session = DatabaseConfig.getSessionFactory().openSession()) {
 
+            transaction = session.beginTransaction();
+
+            accounts.forEach(a->session.save(a));
+
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error(BankConstants.LOG,e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
 
 
 

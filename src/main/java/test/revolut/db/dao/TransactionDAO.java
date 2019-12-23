@@ -1,9 +1,6 @@
 package test.revolut.db.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.SerializationUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -12,12 +9,8 @@ import org.slf4j.LoggerFactory;
 import test.revolut.config.DatabaseConfig;
 import test.revolut.db.entity.Account;
 import test.revolut.exception.InvalidAccountException;
-import test.revolut.exception.InvalidBankTransaction;
 import test.revolut.util.BankConstants;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -56,10 +49,10 @@ public class TransactionDAO {
         if(null == account){
              throw new InvalidAccountException();
         }
-        return getTransaction(account);
+        return getLastSuccessFulTransaction(account);
     }
 
-    public Optional<test.revolut.db.entity.Transaction> getTransaction(Account account) {
+    public Optional<test.revolut.db.entity.Transaction> getLastSuccessFulTransaction(Account account) {
         try (Session session = DatabaseConfig.getSessionFactory().openSession()) {
             Query query = session.createQuery("from test.revolut.db.entity.Transaction where valid=true and status=:status and toAccount=:account");
             query.setParameter("account",account);
@@ -92,6 +85,23 @@ public class TransactionDAO {
             query.setParameter("account",account);
             List<test.revolut.db.entity.Transaction> transactions =  query.list();
             return transactions;
+        }
+    }
+
+    public void saveAllTransactions(List<test.revolut.db.entity.Transaction> asList) {
+        Transaction transaction = null;
+        try (Session session = DatabaseConfig.getSessionFactory().openSession()) {
+
+            transaction = session.beginTransaction();
+
+            asList.forEach(trans ->session.save(trans));
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
         }
     }
 }

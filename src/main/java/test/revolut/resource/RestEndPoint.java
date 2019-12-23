@@ -216,6 +216,41 @@ String errorMsg;
         response.setTransactionAmount(transaction.getAmount());
         response.setAction(transaction.getAction());
         response.setDateCreated(transaction.getCreatedTime().toString());
+        response.setRemarks(transaction.getRemarks());
         return response;
     }
+    @POST
+    @Path("/accounts/{accountId}/transfer")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String transferFund(@PathParam("accountId") String fromAccount, @QueryParam("amount") int amount, @QueryParam("toaccount") String toAccount){
+        String errorMsg;
+        try {
+            if(amount <= 0){
+                throw new InvalidBalanceException();
+            }
+            Account fromAccountObj = accountService.getAccount(Integer.valueOf(fromAccount));
+            Account toAccountObj = accountService.getAccount(Integer.valueOf(toAccount));
+
+            validateLastTransactionState(fromAccountObj);
+            validateLastTransactionState(toAccountObj);
+            Boolean success = transactionService.transferFund(fromAccountObj,toAccountObj,amount,BankConstants.DEFAULT_CURRENCY);
+            if(success){
+                return "your transaction is successful. Please check your statement for the current balance.";
+            }else{
+                return "Error Processing your request. Please try again.";
+            }
+
+        }catch(InvalidBalanceException | InvalidBankTransaction | InvalidAccountException | UnsettledTransactionException e){
+            logger.error(BankConstants.LOG, e);
+            errorMsg= e.getMsg();
+        }
+        catch (Exception e){
+            logger.error(BankConstants.LOG,e);
+            errorMsg= "Internal Server Error";
+        }
+        resetTransactionStateInCaseOfFailure(fromAccount);
+        resetTransactionStateInCaseOfFailure(toAccount);
+        return errorMsg;
+    }
+
 }

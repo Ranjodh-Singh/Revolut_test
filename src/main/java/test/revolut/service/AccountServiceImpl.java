@@ -44,6 +44,18 @@ public class AccountServiceImpl {
         return account;
     }
     public static synchronized int getNewAccountId(){
-        return BankConstants.getGlobalAccountCounter++;
+        return ++BankConstants.getGlobalAccountCounter;
+    }
+
+    public void saveAllAccount(List<Account> asList) {
+        this.accountDAO.saveALlAccount(asList);
+    }
+
+    public AccountDAO getAccountDAO() {
+        return accountDAO;
+    }
+
+    public void setAccountDAO(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
     }
 }
