@@ -23,6 +23,7 @@ Technologies Used:
 - jersery embedded server
 - Junit
 - slf4j
+No DI framework is used to keep it simple.
 
 # API Specs
 Please go to this location for Sample API-
