@@ -11,7 +11,11 @@ To run-(java 8 has been used and latest maven version.)
 >cd target
 
 >java -jar bank-1.0.jar
+
+
 or for custom port.
+
+
 > java -jar bank-1.0.jar 8080
 
 
